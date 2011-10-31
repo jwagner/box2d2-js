@@ -7,11 +7,11 @@ extend(b2CircleContact.prototype, b2Contact.prototype)
 b2CircleContact.prototype._super = function(){ b2Contact.prototype.__constructor.apply(this, arguments) }
 b2CircleContact.prototype.__constructor = function (shape1, shape2) {
 		this._super(shape1, shape2);
-		
+
 		this.m_manifold = this.m_manifolds[0];
-		
-		
-		
+
+
+
 		this.m_manifold.pointCount = 0;
 		var point = this.m_manifold.points[0];
 		point.normalImpulse = 0.0;
@@ -28,7 +28,7 @@ b2CircleContact.Create = function (shape1, shape2, allocator) {
 		return new b2CircleContact(shape1, shape2);
 	}
 b2CircleContact.Destroy = function (contact, allocator) {
-		
+
 	}
 // attributes
 b2CircleContact.prototype.m_manifolds =  [new b2Manifold()];
@@ -39,33 +39,33 @@ b2CircleContact.prototype.Evaluate = function (listener) {
 		var v1;
 		var v2;
 		var mp0;
-		
+
 		var b1 = this.m_shape1.m_body;
 		var b2 = this.m_shape2.m_body;
-		
-		
-		
-		
+
+
+
+
 		this.m0.Set(this.m_manifold);
-		
+
 		b2Collision.b2CollideCircles(this.m_manifold, this.m_shape1, b1.m_xf, this.m_shape2, b2.m_xf);
-		
+
 		var cp = b2CircleContact.s_evalCP;
 		cp.shape1 = this.m_shape1;
 		cp.shape2 = this.m_shape2;
 		cp.friction = this.m_friction;
 		cp.restitution = this.m_restitution;
-		
+
 		if (this.m_manifold.pointCount > 0)
 		{
 			this.m_manifoldCount = 1;
 			var mp = this.m_manifold.points[ 0 ];
-			
+
 			if (this.m0.pointCount == 0)
 			{
 				mp.normalImpulse = 0.0;
 				mp.tangentImpulse = 0.0;
-	
+
 				if (listener)
 				{
 					cp.position = b1.GetWorldPoint(mp.localPoint1);
@@ -82,7 +82,7 @@ b2CircleContact.prototype.Evaluate = function (listener) {
 				mp0 = this.m0.points[ 0 ];
 				mp.normalImpulse = mp0.normalImpulse;
 				mp.tangentImpulse = mp0.tangentImpulse;
-				
+
 				if (listener)
 				{
 					cp.position = b1.GetWorldPoint(mp.localPoint1);

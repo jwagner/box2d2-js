@@ -18,16 +18,16 @@
 
 package Box2D.Common.Math{
 
-	
+
 import Box2D.Common.*;
-	
-	
+
+
 /// A transform contains translation and rotation. It is used to represent
 /// the position and orientation of rigid frames.
 public class b2XForm
 {
 	/// The default constructor does nothing (for performance).
-	public function b2XForm(pos:b2Vec2=null, r:b2Mat22=null) : void 
+	public function b2XForm(pos:b2Vec2=null, r:b2Mat22=null) : void
 	{
 		if (pos){
 			position.SetV(pos);
@@ -37,7 +37,7 @@ public class b2XForm
 	}
 
 	/// Initialize using a position vector and a rotation matrix.
-	public function Initialize(pos:b2Vec2, r:b2Mat22) : void 
+	public function Initialize(pos:b2Vec2, r:b2Mat22) : void
 	{
 		position.SetV(pos);
 		R.SetM(r);
@@ -50,7 +50,7 @@ public class b2XForm
 		R.SetIdentity();
 	}
 
-	
+
 
 	public function Set(x:b2XForm) : void{
 

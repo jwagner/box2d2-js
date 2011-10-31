@@ -3,22 +3,22 @@ this.__varz();
 this.__constructor.apply(this, arguments);
 }
 b2Shape.prototype.__constructor = function (def) {
-		
+
 		this.m_userData = def.userData;
 		this.m_friction = def.friction;
 		this.m_restitution = def.restitution;
 		this.m_density = def.density;
 		this.m_body = null;
 		this.m_sweepRadius = 0.0;
-		
+
 		this.m_next = null;
-		
+
 		this.m_proxyId = b2Pair.b2_nullProxy;
-		
+
 		this.m_filter = def.filter.Copy();
-		
+
 		this.m_isSensor = def.isSensor;
-		
+
 	}
 b2Shape.prototype.__varz = function(){
 }
@@ -36,23 +36,23 @@ b2Shape.Create = function (def, allocator) {
 		{
 		case b2Shape.e_circleShape:
 			{
-				
+
 				return new b2CircleShape(def);
 			}
-		
+
 		case b2Shape.e_polygonShape:
 			{
-				
+
 				return new b2PolygonShape(def);
 			}
-		
+
 		default:
-			
+
 			return null;
 		}
 	}
 b2Shape.Destroy = function (shape, allocator) {
-		
+
 	}
 // attributes
 b2Shape.prototype.m_type =  0;
@@ -93,8 +93,8 @@ b2Shape.prototype.SetUserData = function (data) {
 	}
 b2Shape.prototype.TestPoint = function (xf, p) {return false}
 b2Shape.prototype.TestSegment = function (xf,
-								lambda, 
-								normal, 
+								lambda,
+								normal,
 								segment,
 								maxLambda) {return false}
 b2Shape.prototype.ComputeAABB = function (aabb, xf) {}
@@ -112,17 +112,17 @@ b2Shape.prototype.GetRestitution = function () {
 		return this.m_restitution;
 	}
 b2Shape.prototype.CreateProxy = function (broadPhase, transform) {
-		
-		
-		
+
+
+
 		var aabb = b2Shape.s_proxyAABB;
 		this.ComputeAABB(aabb, transform);
-		
+
 		var inRange = broadPhase.InRange(aabb);
-		
-		
-		
-		
+
+
+
+
 		if (inRange)
 		{
 			this.m_proxyId = broadPhase.CreateProxy(aabb, this);
@@ -131,28 +131,28 @@ b2Shape.prototype.CreateProxy = function (broadPhase, transform) {
 		{
 			this.m_proxyId = b2Pair.b2_nullProxy;
 		}
-		
+
 	}
 b2Shape.prototype.DestroyProxy = function (broadPhase) {
-		
+
 		if (this.m_proxyId != b2Pair.b2_nullProxy)
 		{
 			broadPhase.DestroyProxy(this.m_proxyId);
 			this.m_proxyId = b2Pair.b2_nullProxy;
 		}
-		
+
 	}
 b2Shape.prototype.Synchronize = function (broadPhase, transform1, transform2) {
-		
+
 		if (this.m_proxyId == b2Pair.b2_nullProxy)
-		{	
+		{
 			return false;
 		}
-		
-		
+
+
 		var aabb = b2Shape.s_syncAABB;
 		this.ComputeSweptAABB(aabb, transform1, transform2);
-		
+
 		if (broadPhase.InRange(aabb))
 		{
 			broadPhase.MoveProxy(this.m_proxyId, aabb);
@@ -162,22 +162,22 @@ b2Shape.prototype.Synchronize = function (broadPhase, transform1, transform2) {
 		{
 			return false;
 		}
-		
+
 	}
 b2Shape.prototype.RefilterProxy = function (broadPhase, transform) {
-		
+
 		if (this.m_proxyId == b2Pair.b2_nullProxy)
 		{
 			return;
 		}
-		
+
 		broadPhase.DestroyProxy(this.m_proxyId);
-		
+
 		var aabb = b2Shape.s_resetAABB;
 		this.ComputeAABB(aabb, transform);
-		
+
 		var inRange = broadPhase.InRange(aabb);
-		
+
 		if (inRange)
 		{
 			this.m_proxyId = broadPhase.CreateProxy(aabb, this);
@@ -186,6 +186,6 @@ b2Shape.prototype.RefilterProxy = function (broadPhase, transform) {
 		{
 			this.m_proxyId = b2Pair.b2_nullProxy;
 		}
-		
+
 	}
 b2Shape.prototype.UpdateSweepRadius = function (center) {}

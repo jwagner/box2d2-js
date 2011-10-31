@@ -28,14 +28,14 @@ b2Math.b2CrossFV = function (s, a) {
 		return v;
 	}
 b2Math.b2MulMV = function (A, v) {
-		
-		
+
+
 		var u = new b2Vec2(A.col1.x * v.x + A.col2.x * v.y, A.col1.y * v.x + A.col2.y * v.y);
 		return u;
 	}
 b2Math.b2MulTMV = function (A, v) {
-		
-		
+
+
 		var u = new b2Vec2(b2Math.b2Dot(v, A.col1), b2Math.b2Dot(v, A.col2));
 		return u;
 	}
@@ -43,12 +43,12 @@ b2Math.b2MulX = function (T, v) {
 		var a = b2Math.b2MulMV(T.R, v);
 		a.x += T.position.x;
 		a.y += T.position.y;
-		
+
 		return a;
 	}
 b2Math.b2MulXT = function (T, v) {
 		var a = b2Math.SubtractVV(v, T.position);
-		
+
 		var tX = (a.x * T.R.col1.x + a.y * T.R.col1.y );
 		a.y = (a.x * T.R.col2.x + a.y * T.R.col2.y );
 		a.x = tX;

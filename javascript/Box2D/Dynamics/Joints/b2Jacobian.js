@@ -24,7 +24,7 @@ b2Jacobian.prototype.Set = function (x1, a1, x2, a2) {
 		this.linear2.SetV(x2); this.angular2 = a2;
 	}
 b2Jacobian.prototype.Compute = function (x1, a1, x2, a2) {
-		
-		
+
+
 		return (this.linear1.x*x1.x + this.linear1.y*x1.y) + this.angular1 * a1 + (this.linear2.x*x2.x + this.linear2.y*x2.y) + this.angular2 * a2;
 	}

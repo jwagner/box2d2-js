@@ -75,7 +75,7 @@ b2Vec2.prototype.Normalize = function () {
 		var invLength = 1.0 / length;
 		this.x *= invLength;
 		this.y *= invLength;
-		
+
 		return length;
 	}
 b2Vec2.prototype.IsValid = function () {

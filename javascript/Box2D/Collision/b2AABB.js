@@ -14,7 +14,7 @@ b2AABB.prototype.lowerBound =  new b2Vec2();
 b2AABB.prototype.upperBound =  new b2Vec2();
 // methods
 b2AABB.prototype.IsValid = function () {
-		
+
 		var dX = this.upperBound.x - this.lowerBound.x;
 		var dY = this.upperBound.y - this.lowerBound.y;
 		var valid = dX >= 0.0 && dY >= 0.0;

@@ -7,8 +7,8 @@ b2ContactConstraint.prototype.__constructor = function () {
 		for (var i = 0; i < b2Settings.b2_maxManifoldPoints; i++){
 			this.points[i] = new b2ContactConstraintPoint();
 		}
-		
-		
+
+
 	}
 b2ContactConstraint.prototype.__varz = function(){
 this.normal = new b2Vec2();
