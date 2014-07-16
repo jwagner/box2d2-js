@@ -17,8 +17,8 @@
 */
 
 package Box2D.Dynamics{
-	
-	
+
+
 public class b2TimeStep
 {
 	public var dt:Number;			// time step

@@ -47,20 +47,20 @@ b2PulleyJointDef.prototype.Initialize = function (b1, b2,
 		this.groundAnchor2.SetV( ga2 );
 		this.localAnchor1 = this.body1.GetLocalPoint(anchor1);
 		this.localAnchor2 = this.body2.GetLocalPoint(anchor2);
-		
+
 		var d1X = anchor1.x - ga1.x;
 		var d1Y = anchor1.y - ga1.y;
-		
+
 		this.length1 = Math.sqrt(d1X*d1X + d1Y*d1Y);
-		
-		
+
+
 		var d2X = anchor2.x - ga2.x;
 		var d2Y = anchor2.y - ga2.y;
-		
+
 		this.length2 = Math.sqrt(d2X*d2X + d2Y*d2Y);
-		
+
 		this.ratio = r;
-		
+
 		var C = this.length1 + this.ratio * this.length2;
 		this.maxLength1 = C - this.ratio * b2PulleyJoint.b2_minPulleyLength;
 		this.maxLength2 = (C - b2PulleyJoint.b2_minPulleyLength) / this.ratio;

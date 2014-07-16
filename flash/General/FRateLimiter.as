@@ -17,28 +17,28 @@
 //===========================================================
 
 package General{
-	
-	
+
+
 	import flash.utils.getTimer;
-	
-	
+
+
 	public class FRateLimiter{
-		
-		
+
+
 		//======================
 		// limit frame function
 		//======================
 		static public function limitFrame(maxFPS:uint):void{
-			
+
 			var fTime:uint = 1000 / maxFPS;
-			
+
 			while(Math.abs(newT - oldT) < fTime){
 				newT = getTimer();
 			}
 			oldT = getTimer();
-			
+
 		}
-		
+
 		//======================
 		// member vars
 		//======================

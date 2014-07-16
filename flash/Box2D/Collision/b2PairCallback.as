@@ -17,8 +17,8 @@
 */
 
 package Box2D.Collision{
-	
-	
+
+
 public class b2PairCallback
 {
 	//virtual ~b2PairCallback() {}
@@ -30,6 +30,6 @@ public class b2PairCallback
 	// this will be called with null pairUserData because the pair never existed.
 	public virtual function PairRemoved(proxyUserData1:*, proxyUserData2:*, pairUserData:*) : void{};
 };
-	
-	
+
+
 }

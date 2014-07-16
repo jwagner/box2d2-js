@@ -19,8 +19,8 @@ b2Sweep.prototype.a =  null;
 b2Sweep.prototype.t0 =  null;
 // methods
 b2Sweep.prototype.GetXForm = function (xf, t) {
-		
-		
+
+
 		if (1.0 - this.t0 > Number.MIN_VALUE)
 		{
 			var alpha = (t - this.t0) / (1.0 - this.t0);
@@ -34,19 +34,19 @@ b2Sweep.prototype.GetXForm = function (xf, t) {
 			xf.position.SetV(this.c);
 			xf.R.Set(this.a);
 		}
-		
-		
-		
+
+
+
 		var tMat = xf.R;
 		xf.position.x -= (tMat.col1.x * this.localCenter.x + tMat.col2.x * this.localCenter.y);
 		xf.position.y -= (tMat.col1.y * this.localCenter.x + tMat.col2.y * this.localCenter.y);
-		
+
 	}
 b2Sweep.prototype.Advance = function (t) {
 		if (this.t0 < t && 1.0 - this.t0 > Number.MIN_VALUE)
 		{
 			var alpha = (t - this.t0) / (1.0 - this.t0);
-			
+
 			this.c0.x = (1.0 - alpha) * this.c0.x + alpha * this.c.x;
 			this.c0.y = (1.0 - alpha) * this.c0.y + alpha * this.c.y;
 			this.a0 = (1.0 - alpha) * this.a0 + alpha * this.a;

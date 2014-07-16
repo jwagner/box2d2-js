@@ -18,11 +18,11 @@ b2Bound.prototype.Swap = function (b) {
 		var tempValue = this.value;
 		var tempProxyId = this.proxyId;
 		var tempStabbingCount = this.stabbingCount;
-		
+
 		this.value = b.value;
 		this.proxyId = b.proxyId;
 		this.stabbingCount = b.stabbingCount;
-		
+
 		b.value = tempValue;
 		b.proxyId = tempProxyId;
 		b.stabbingCount = tempStabbingCount;

@@ -17,7 +17,7 @@
 */
 
 package Box2D.Collision{
-	
+
 import Box2D.Common.Math.*;
 
 /// An oriented bounding box.

@@ -4,34 +4,34 @@ this.__constructor.apply(this, arguments);
 }
 b2Contact.prototype.__constructor = function (s1, s2) {
 		this.m_flags = 0;
-		
+
 		if (!s1 || !s2){
 			this.m_shape1 = null;
 			this.m_shape2 = null;
 			return;
 		}
-		
+
 		if (s1.IsSensor() || s2.IsSensor())
 		{
 			this.m_flags |= b2Contact.e_nonSolidFlag;
 		}
-		
+
 		this.m_shape1 = s1;
 		this.m_shape2 = s2;
-		
+
 		this.m_manifoldCount = 0;
-		
+
 		this.m_friction = Math.sqrt(this.m_shape1.m_friction * this.m_shape2.m_friction);
 		this.m_restitution = b2Math.b2Max(this.m_shape1.m_restitution, this.m_shape2.m_restitution);
-		
+
 		this.m_prev = null;
 		this.m_next = null;
-		
+
 		this.m_node1.contact = null;
 		this.m_node1.prev = null;
 		this.m_node1.next = null;
 		this.m_node1.other = null;
-		
+
 		this.m_node2.contact = null;
 		this.m_node2.prev = null;
 		this.m_node2.next = null;
@@ -50,13 +50,13 @@ b2Contact.s_registers =  null;
 b2Contact.s_initialized =  false;
 // static methods
 b2Contact.AddType = function (createFcn, destroyFcn, type1, type2) {
-		
-		
-		
+
+
+
 		b2Contact.s_registers[type1][type2].createFcn = createFcn;
 		b2Contact.s_registers[type1][type2].destroyFcn = destroyFcn;
 		b2Contact.s_registers[type1][type2].primary = true;
-		
+
 		if (type1 != type2)
 		{
 			b2Contact.s_registers[type2][type1].createFcn = createFcn;
@@ -72,11 +72,11 @@ b2Contact.InitializeRegisters = function () {
 				b2Contact.s_registers[i][j] = new b2ContactRegister();
 			}
 		}
-		
+
 		b2Contact.AddType(b2CircleContact.Create, b2CircleContact.Destroy, b2Shape.e_circleShape, b2Shape.e_circleShape);
 		b2Contact.AddType(b2PolyAndCircleContact.Create, b2PolyAndCircleContact.Destroy, b2Shape.e_polygonShape, b2Shape.e_circleShape);
 		b2Contact.AddType(b2PolygonContact.Create, b2PolygonContact.Destroy, b2Shape.e_polygonShape, b2Shape.e_polygonShape);
-		
+
 	}
 b2Contact.Create = function (shape1, shape2, allocator) {
 		if (b2Contact.s_initialized == false)
@@ -84,13 +84,13 @@ b2Contact.Create = function (shape1, shape2, allocator) {
 			b2Contact.InitializeRegisters();
 			b2Contact.s_initialized = true;
 		}
-		
+
 		var type1 = shape1.m_type;
 		var type2 = shape2.m_type;
-		
-		
-		
-		
+
+
+
+
 		var reg = b2Contact.s_registers[type1][type2];
 		var createFcn = reg.createFcn;
 		if (createFcn != null)
@@ -116,20 +116,20 @@ b2Contact.Create = function (shape1, shape2, allocator) {
 		}
 	}
 b2Contact.Destroy = function (contact, allocator) {
-		
-		
+
+
 		if (contact.m_manifoldCount > 0)
 		{
 			contact.m_shape1.m_body.WakeUp();
 			contact.m_shape2.m_body.WakeUp();
 		}
-		
+
 		var type1 = contact.m_shape1.m_type;
 		var type2 = contact.m_shape2.m_type;
-		
-		
-		
-		
+
+
+
+
 		var reg = b2Contact.s_registers[type1][type2];
 		var destroyFcn = reg.destroyFcn;
 		destroyFcn(contact, allocator);
@@ -165,21 +165,21 @@ b2Contact.prototype.GetShape2 = function () {
 	}
 b2Contact.prototype.Update = function (listener) {
 		var oldCount = this.m_manifoldCount;
-		
+
 		this.Evaluate(listener);
-		
+
 		var newCount = this.m_manifoldCount;
-		
+
 		var body1 = this.m_shape1.m_body;
 		var body2 = this.m_shape2.m_body;
-		
+
 		if (newCount == 0 && oldCount > 0)
 		{
 			body1.WakeUp();
 			body2.WakeUp();
 		}
-		
-		
+
+
 		if (body1.IsStatic() || body1.IsBullet() || body2.IsStatic() || body2.IsBullet())
 		{
 			this.m_flags &= ~b2Contact.e_slowFlag;

@@ -31,60 +31,60 @@ b2Joint.e_equalLimits =  3;
 // static methods
 b2Joint.Create = function (def, allocator) {
 		var joint = null;
-		
+
 		switch (def.type)
 		{
 		case b2Joint.e_distanceJoint:
 			{
-				
+
 				joint = new b2DistanceJoint(def);
 			}
 			break;
-		
+
 		case b2Joint.e_mouseJoint:
 			{
-				
+
 				joint = new b2MouseJoint(def);
 			}
 			break;
-		
+
 		case b2Joint.e_prismaticJoint:
 			{
-				
+
 				joint = new b2PrismaticJoint(def);
 			}
 			break;
-		
+
 		case b2Joint.e_revoluteJoint:
 			{
-				
+
 				joint = new b2RevoluteJoint(def);
 			}
 			break;
-		
+
 		case b2Joint.e_pulleyJoint:
 			{
-				
+
 				joint = new b2PulleyJoint(def);
 			}
 			break;
-		
+
 		case b2Joint.e_gearJoint:
 			{
-				
+
 				joint = new b2GearJoint(def);
 			}
 			break;
-		
+
 		default:
-			
+
 			break;
 		}
-		
+
 		return joint;
 	}
 b2Joint.Destroy = function (joint, allocator) {
-		
+
 	}
 // attributes
 b2Joint.prototype.m_type =  0;

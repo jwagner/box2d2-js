@@ -33,7 +33,7 @@ public class b2FilterData
 		copy.groupIndex = groupIndex;
 		return copy;
 	}
-	
+
 	/// The collision category bits. Normally you would just set one bit.
 	public var categoryBits: uint = 0x0001;
 

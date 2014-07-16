@@ -5,7 +5,7 @@ var ctx = canvas.getContext('2d');
 var c_width = 55.0;
 var ppm = canvas.width/c_width;
 var c_height = canvas.height/ppm;
-ctx.setTransform(ppm, 0, 0, -ppm, 0, canvas.height);  
+ctx.setTransform(ppm, 0, 0, -ppm, 0, canvas.height);
 
 var worldAABB = new b2AABB();
 worldAABB.lowerBound.Set(-10000.0, -10000.0);

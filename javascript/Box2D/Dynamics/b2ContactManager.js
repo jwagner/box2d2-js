@@ -23,45 +23,45 @@ b2ContactManager.prototype.m_destroyImmediate =  null;
 b2ContactManager.prototype.PairAdded = function (proxyUserData1, proxyUserData2) {
 		var shape1 = proxyUserData1;
 		var shape2 = proxyUserData2;
-		
+
 		var body1 = shape1.m_body;
 		var body2 = shape2.m_body;
-		
+
 		if (body1.IsStatic() && body2.IsStatic())
 		{
 			return this.m_nullContact;
 		}
-		
+
 		if (shape1.m_body == shape2.m_body)
 		{
 			return this.m_nullContact;
 		}
-		
+
 		if (body2.IsConnected(body1))
 		{
 			return this.m_nullContact;
 		}
-		
+
 		if (this.m_world.m_contactFilter != null && this.m_world.m_contactFilter.ShouldCollide(shape1, shape2) == false)
 		{
 			return this.m_nullContact;
 		}
-		
-		
+
+
 		var c = b2Contact.Create(shape1, shape2, this.m_world.m_blockAllocator);
-		
+
 		if (c == null)
 		{
 			return this.m_nullContact;
 		}
-		
-		
+
+
 		shape1 = c.m_shape1;
 		shape2 = c.m_shape2;
 		body1 = shape1.m_body;
 		body2 = shape2.m_body;
-		
-		
+
+
 		c.m_prev = null;
 		c.m_next = this.m_world.m_contactList;
 		if (this.m_world.m_contactList != null)
@@ -69,14 +69,14 @@ b2ContactManager.prototype.PairAdded = function (proxyUserData1, proxyUserData2)
 			this.m_world.m_contactList.m_prev = c;
 		}
 		this.m_world.m_contactList = c;
-		
-		
-		
-		
-		
+
+
+
+
+
 		c.m_node1.contact = c;
 		c.m_node1.other = body2;
-		
+
 		c.m_node1.prev = null;
 		c.m_node1.next = body1.m_contactList;
 		if (body1.m_contactList != null)
@@ -84,11 +84,11 @@ b2ContactManager.prototype.PairAdded = function (proxyUserData1, proxyUserData2)
 			body1.m_contactList.prev = c.m_node1;
 		}
 		body1.m_contactList = c.m_node1;
-		
-		
+
+
 		c.m_node2.contact = c;
 		c.m_node2.other = body1;
-		
+
 		c.m_node2.prev = null;
 		c.m_node2.next = body2.m_contactList;
 		if (body2.m_contactList != null)
@@ -96,34 +96,34 @@ b2ContactManager.prototype.PairAdded = function (proxyUserData1, proxyUserData2)
 			body2.m_contactList.prev = c.m_node2;
 		}
 		body2.m_contactList = c.m_node2;
-		
+
 		++this.m_world.m_contactCount;
 		return c;
-		
+
 	}
 b2ContactManager.prototype.PairRemoved = function (proxyUserData1, proxyUserData2, pairUserData) {
-		
+
 		if (pairUserData == null)
 		{
 			return;
 		}
-		
+
 		var c = pairUserData;
 		if (c == this.m_nullContact)
 		{
 			return;
 		}
-		
-		
-		
+
+
+
 		this.Destroy(c);
 	}
 b2ContactManager.prototype.Destroy = function (c) {
-		
+
 		var shape1 = c.m_shape1;
 		var shape2 = c.m_shape2;
-		
-		
+
+
 		var manifoldCount = c.m_manifoldCount;
 		if (manifoldCount > 0 && this.m_world.m_contactListener)
 		{
@@ -136,12 +136,12 @@ b2ContactManager.prototype.Destroy = function (c) {
 			cp.shape2 = c.m_shape2;
 			cp.friction = c.m_friction;
 			cp.restitution = c.m_restitution;
-			
+
 			for (var i = 0; i < manifoldCount; ++i)
 			{
 				var manifold = manifolds[ i ];
 				cp.normal.SetV(manifold.normal);
-				
+
 				for (var j = 0; j < manifold.pointCount; ++j)
 				{
 					var mp = manifold.points[j];
@@ -155,64 +155,64 @@ b2ContactManager.prototype.Destroy = function (c) {
 				}
 			}
 		}
-		
-		
+
+
 		if (c.m_prev)
 		{
 			c.m_prev.m_next = c.m_next;
 		}
-		
+
 		if (c.m_next)
 		{
 			c.m_next.m_prev = c.m_prev;
 		}
-		
+
 		if (c == this.m_world.m_contactList)
 		{
 			this.m_world.m_contactList = c.m_next;
 		}
-		
+
 		var body1 = shape1.m_body;
 		var body2 = shape2.m_body;
-		
-		
+
+
 		if (c.m_node1.prev)
 		{
 			c.m_node1.prev.next = c.m_node1.next;
 		}
-		
+
 		if (c.m_node1.next)
 		{
 			c.m_node1.next.prev = c.m_node1.prev;
 		}
-		
+
 		if (c.m_node1 == body1.m_contactList)
 		{
 			body1.m_contactList = c.m_node1.next;
 		}
-		
-		
+
+
 		if (c.m_node2.prev)
 		{
 			c.m_node2.prev.next = c.m_node2.next;
 		}
-		
+
 		if (c.m_node2.next)
 		{
 			c.m_node2.next.prev = c.m_node2.prev;
 		}
-		
+
 		if (c.m_node2 == body2.m_contactList)
 		{
 			body2.m_contactList = c.m_node2.next;
 		}
-		
-		
+
+
 		b2Contact.Destroy(c, this.m_world.m_blockAllocator);
 		--this.m_world.m_contactCount;
 	}
 b2ContactManager.prototype.Collide = function () {
-		
+
 		for (var c = this.m_world.m_contactList; c; c = c.m_next)
 		{
 			var body1 = c.m_shape1.m_body;
@@ -221,7 +221,7 @@ b2ContactManager.prototype.Collide = function () {
 			{
 				continue;
 			}
-			
+
 			c.Update(this.m_world.m_contactListener);
 		}
 	}

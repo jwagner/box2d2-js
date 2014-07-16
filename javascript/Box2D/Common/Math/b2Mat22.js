@@ -59,31 +59,31 @@ b2Mat22.prototype.GetAngle = function () {
 		return Math.atan2(this.col1.y, this.col1.x);
 	}
 b2Mat22.prototype.Invert = function (out) {
-		var a = this.col1.x; 
-		var b = this.col2.x; 
-		var c = this.col1.y; 
+		var a = this.col1.x;
+		var b = this.col2.x;
+		var c = this.col1.y;
 		var d = this.col2.y;
-		
+
 		var det = a * d - b * c;
-		
+
 		det = 1.0 / det;
 		out.col1.x = det * d;	out.col2.x = -det * b;
 		out.col1.y = -det * c;	out.col2.y = det * a;
 		return out;
 	}
 b2Mat22.prototype.Solve = function (out, bX, bY) {
-		
+
 		var a11 = this.col1.x;
 		var a12 = this.col2.x;
 		var a21 = this.col1.y;
 		var a22 = this.col2.y;
-		
+
 		var det = a11 * a22 - a12 * a21;
-		
+
 		det = 1.0 / det;
 		out.x = det * (a22 * bX - a12 * bY);
 		out.y = det * (a11 * bY - a21 * bX);
-		
+
 		return out;
 	}
 b2Mat22.prototype.Abs = function () {
